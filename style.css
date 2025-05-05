@@ -1,0 +1,269 @@
+:root {
+  --blue: #1e88e5;
+  --green: #43a047;
+  --light: #f5f7fa;
+  --dark: #1e1e2f;
+  --font: 'Nunito', sans-serif;
+}
+
+[data-theme="light"] {
+  --bg: var(--light);
+  --text: #2d3436;
+  --card: #ffffff;
+}
+
+[data-theme="dark"] {
+  --bg: var(--dark);
+  --text: #e0e0e0;
+  --card: #2e2e3d;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+nav.sidebar {
+  width: 260px;
+  background: var(--blue);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+nav.sidebar h2 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+nav.sidebar button {
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--green);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+nav.sidebar a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: background 0.2s;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.4rem;
+}
+
+nav.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+main.content {
+  flex: 1;
+  padding: 2rem;
+  overflow: auto;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  padding: 0.6rem 1.2rem;
+  background: var(--green);
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.controls button:hover {
+  transform: scale(1.05);
+}
+
+#clock {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+section.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--card);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+  margin-bottom: 0.8rem;
+  font-size: 1.4rem;
+}
+
+.card p {
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.card button {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--blue);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Yükleniyor animasyonu */
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.spinner {
+  border: 6px solid #ccc;
+  border-top: 6px solid var(--blue);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Sayfa geçiş animasyonu */
+.page {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.page.loaded {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0 !important;
+}
+
+/* Hamburger menü */
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  nav.sidebar {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    height: 100%;
+    background: var(--blue);
+    z-index: 1000;
+    transform: translateX(0);
+  }
+
+  nav.sidebar.active {
+    left: 0;
+    transition: left 0.3s;
+  }
+
+  .hamburger {
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+
+  main.content {
+    padding: 1.5rem;
+    margin-top: 60px;
+  }
+
+  section.cards {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    gap: 0.5rem;
+  }
+
+  .controls button {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+}
